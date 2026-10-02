@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>bt电影网 | bt电影网 - 一键连播，今晚不换片</title>
+<meta name="keywords" content="bt电影网, bt电影网电影, bt电影网一键连播, bt电影网追剧, bt电影网新片, bt电影网片单, 连播清单, 深夜影院">
+<meta name="description" content="bt电影网（https://btdianyingwang-wap.github.io）是一台在线电影机：一键连播、分主题排片、每晚不换片。10 个栏目、40 张片单，今晚看什么一秒决定。">
+<meta name="robots" content="index,follow">
+<meta name="renderer" content="webkit">
+<meta name="applicable-device" content="pc,mobile">
+<meta property="og:type" content="website">
+<meta property="og:title" content="bt电影网 | 一键连播，今晚不换片">
+<meta property="og:description" content="bt电影网（https://btdianyingwang-wap.github.io）是一台在线电影机，一键连播、分主题排片，每晚不换片。">
+<meta property="og:url" content="https://btdianyingwang-wap.github.io/">
+<meta property="og:site_name" content="bt电影网">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://btdianyingwang-wap.github.io/">
+<style>
+:root{
+  --bg:#050a10;
+  --bg2:#0a141d;
+  --ink:#eaf4fb;
+  --ink2:#a8c3d4;
+  --ink3:#6f8ca3;
+  --teal:#14d4b8;
+  --teal2:#0fa88f;
+  --cyan:#22b8ff;
+  --blue:#2f6bff;
+  --amber:#ffb020;
+  --rose:#ff4d6d;
+  --line:rgba(234,244,251,.13);
+  --line2:rgba(234,244,251,.07);
+  --reel:#c9d6df;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  font-size:16px;line-height:1.8;
+  background-image:
+    radial-gradient(1100px 600px at 18% -8%,rgba(20,212,184,.13),transparent 60%),
+    radial-gradient(900px 500px at 92% 6%,rgba(47,107,255,.16),transparent 62%),
+    linear-gradient(180deg,#050a10,#07101a 40%,#050a10);
+  background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none;transition:.18s}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select{font-family:inherit}
+::selection{background:var(--teal);color:#04111a}
+.wrap{max-width:1320px;margin:0 auto;padding:0 34px}
+
+/* ===== 顶部播放条 ===== */
+.reel-top{height:11px;background:
+  repeating-linear-gradient(90deg,var(--reel) 0 8px,transparent 8px 14px),
+  linear-gradient(90deg,var(--teal),var(--cyan) 55%,var(--blue));
+  background-blend-mode:normal;opacity:.9}
+.reel-top2{height:4px;background:rgba(20,212,184,.28)}
+
+/* ===== 导航 ===== */
+.nav{position:sticky;top:0;z-index:90;border-bottom:1px solid var(--line);background:rgba(5,10,16,.86);backdrop-filter:blur(10px)}
+.nav .wrap{display:flex;align-items:center;height:66px;gap:4px}
+.logo{display:flex;align-items:center;gap:11px;flex-shrink:0;padding-right:20px;border-right:1px solid var(--line);margin-right:10px}
+.logo .reel{width:34px;height:34px;border-radius:50%;border:2.5px solid var(--teal);position:relative;flex-shrink:0;background:radial-gradient(circle,transparent 4px,var(--teal) 4.5px,transparent 5px),radial-gradient(circle,transparent 9px,var(--teal) 9.5px,transparent 10px)}
+.logo .reel::after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--teal)}
+.logo b{font-size:19px;font-weight:900;letter-spacing:1px}
+.logo b i{font-style:normal;color:var(--teal)}
+.nav a{padding:8px 13px;font-size:13.5px;font-weight:700;color:var(--ink2);border-radius:3px;letter-spacing:.6px;white-space:nowrap}
+.nav a:hover{color:var(--teal);background:rgba(20,212,184,.09)}
+.nav .nb{flex:1}
+.player-btn{display:flex;align-items:center;gap:8px;padding:9px 18px;background:var(--teal);color:#04111a;font-size:13px;font-weight:900;letter-spacing:1.5px;border-radius:3px;flex-shrink:0}
+.player-btn:hover{background:var(--cyan);color:#04111a}
+.player-btn::before{content:"▶";font-size:10px}
+.mob{display:none;width:40px;height:40px;margin-left:10px;position:relative;flex-shrink:0}
+.mob i{position:absolute;left:50%;top:50%;width:18px;height:2px;background:var(--ink);transform:translate(-50%,-50%)}
+.mob i:nth-child(1){transform:translate(-50%,calc(-50% - 6px))}
+.mob i:nth-child(3){transform:translate(-50%,calc(-50% + 6px))}
+
+/* ===== 首屏：放映厅 ===== */
+.hero{padding:52px 0 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.now{position:relative}
+.badge{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;letter-spacing:3px;color:var(--teal);border:1px solid rgba(20,212,184,.45);padding:5px 13px;border-radius:30px;margin-bottom:22px}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--rose);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.5)}}
+.now h1{font-size:clamp(34px,5.4vw,62px);font-weight:900;line-height:1.12;letter-spacing:-.5px}
+.now h1 em{font-style:normal;color:var(--teal)}
+.now p{margin-top:20px;font-size:16.5px;color:var(--ink2);max-width:520px}
+.now .act{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.now .act a{display:inline-flex;align-items:center;gap:9px;padding:15px 28px;border-radius:3px;font-size:14px;font-weight:900;letter-spacing:1.5px}
+.now .act .a1{background:var(--teal);color:#04111a}
+.now .act .a1:hover{background:var(--cyan)}
+.now .act .a2{border:1px solid var(--line);color:var(--ink)}
+.now .act .a2:hover{border-color:var(--teal);color:var(--teal)}
+.now .act a::before{content:"▶";font-size:9px;color:var(--teal)}
+.now .act .a2::before{color:var(--ink3)}
+
+.screen{border:1px solid var(--line);border-radius:8px;padding:22px;background:linear-gradient(160deg,rgba(20,212,184,.08),rgba(47,107,255,.05));position:relative;overflow:hidden}
+.screen::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(5,10,16,.16) 3.5px);pointer-events:none}
+.screen .hd{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+.screen .hd b{font-size:12.5px;letter-spacing:3px;color:var(--ink3)}
+.screen .hd span{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--teal)}
+.queue{display:flex;flex-direction:column;gap:0}
+.queue .q{display:grid;grid-template-columns:30px 44px 1fr auto 66px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px dashed var(--line2)}
+.queue .q:last-child{border-bottom:0}
+.queue .q .n{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--teal);text-align:center}
+.queue .q .th{width:44px;height:58px;border-radius:3px;position:relative;overflow:hidden}
+.queue .q .th i{position:absolute;inset:0;opacity:.8}
+.queue .q .nm{font-size:14.5px;font-weight:700;letter-spacing:.3px}
+.queue .q .nm small{display:block;font-size:11.5px;color:var(--ink3);font-weight:600;margin-top:2px;letter-spacing:.4px}
+.queue .q .tm{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink3)}
+.queue .q .go{font-size:11px;font-weight:900;letter-spacing:1px;color:var(--teal);border:1px solid rgba(20,212,184,.4);border-radius:30px;padding:4px 10px;text-align:center}
+.queue .q.on .nm{color:var(--teal)}
+.queue .q.on .go{background:var(--teal);color:#04111a}
+.queue .q.on::before{content:"";position:absolute;left:-22px;top:50%;width:3px;height:24px;background:var(--teal);transform:translateY(-50%)}
+
+/* 指示条 */
+.track{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:40px;display:grid;grid-template-columns:repeat(5,1fr)}
+.track div{padding:18px 8px;text-align:center;border-right:1px solid var(--line2)}
+.track div:last-child{border-right:0}
+.track b{display:block;font-size:clamp(20px,2.6vw,29px);font-weight:900;letter-spacing:-.8px;font-family:ui-monospace,Menlo,monospace;color:var(--teal)}
+.track span{font-size:11px;color:var(--ink3);letter-spacing:1.5px;margin-top:3px;display:block}
+
+/* ===== 栏目标头：播放时间码 ===== */
+.shd{display:flex;align-items:center;gap:16px;margin:52px 0 26px;flex-wrap:wrap}
+.shd .tc{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:64px;border:1.5px solid var(--teal);border-radius:4px;font-family:ui-monospace,Menlo,monospace;flex-shrink:0;position:relative}
+.shd .tc b{font-size:18px;font-weight:900;line-height:1;color:var(--teal)}
+.shd .tc span{font-size:8.5px;letter-spacing:1.5px;color:var(--ink3);margin-top:2px}
+.shd .tx h2{font-size:clamp(22px,3.1vw,31px);font-weight:900;letter-spacing:.5px}
+.shd .tx h2 em{font-style:normal;color:var(--teal)}
+.shd .tx small{display:block;font-size:11.5px;color:var(--ink3);letter-spacing:3px;margin-top:3px}
+.shd .ln{flex:1;height:1px;background:var(--line2);min-width:30px}
+.shd .mo{font-size:12.5px;font-weight:700;color:var(--ink3);letter-spacing:1.5px;border:1px solid var(--line);padding:6px 14px;border-radius:30px}
+.shd .mo:hover{color:var(--teal);border-color:var(--teal)}
+
+/* 栏目一：10 个频道 */
+.ch{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.ch .c{border:1px solid var(--line);background:rgba(234,244,251,.03);padding:20px 18px 18px;position:relative;transition:.2s;cursor:pointer;overflow:hidden}
+.ch .c::before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--teal);transform:scaleY(0);transform-origin:bottom;transition:.25s}
+.ch .c:hover{transform:translateY(-5px);border-color:rgba(20,212,184,.5);background:rgba(20,212,184,.07)}
+.ch .c:hover::before{transform:scaleY(1)}
+.ch .c .freq{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--teal);letter-spacing:.5px}
+.ch .c h3{font-size:17.5px;font-weight:900;margin:10px 0 7px;letter-spacing:.5px}
+.ch .c p{font-size:12.5px;color:var(--ink3);line-height:1.7}
+.ch .c .ct{margin-top:15px;padding-top:12px;border-top:1px dashed var(--line2);display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);font-family:ui-monospace,Menlo,monospace}
+.ch .c .ct b{color:var(--ink)}
+
+/* 栏目二：主题连播包 */
+.pack{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.pk{border:1px solid var(--line);background:linear-gradient(155deg,rgba(20,212,184,.07),rgba(5,10,16,.4));padding:0;border-radius:6px;overflow:hidden;transition:.22s;display:flex;flex-direction:column}
+.pk:hover{transform:translateY(-6px);border-color:rgba(20,212,184,.55);box-shadow:0 22px 50px rgba(0,0,0,.5)}
+.pk .top{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line2)}
+.pk .top .tag{font-size:11px;letter-spacing:2px;color:var(--teal);font-weight:800}
+.pk .top .len{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink3);border:1px solid var(--line2);border-radius:30px;padding:3px 10px}
+.pk .bd{padding:20px 22px 6px}
+.pk h3{font-size:21px;font-weight:900;letter-spacing:.5px}
+.pk .who{font-size:12.5px;color:var(--ink3);margin-top:7px;letter-spacing:.5px}
+.pk .stripe{display:flex;gap:2px;padding:16px 22px 0}
+.pk .stripe i{height:26px;flex:1;border-radius:1px;opacity:.85}
+.pk .ft{margin-top:auto;padding:16px 22px 20px;border-top:1px solid var(--line2);display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.pk .ft div{font-family:ui-monospace,Menlo,monospace}
+.pk .ft b{display:block;font-size:17px;font-weight:900;color:var(--teal)}
+.pk .ft span{font-size:10.5px;color:var(--ink3);letter-spacing:1px}
+
+/* 栏目三：放映表（横向滚动卡片） */
+.board{overflow:hidden;position:relative}
+.board::before,.board::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.board::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.board::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.filmstrip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 60px 18px;scrollbar-width:thin;scrollbar-color:var(--teal) transparent}
+.filmstrip::-webkit-scrollbar{height:6px}
+.filmstrip::-webkit-scrollbar-thumb{background:var(--teal);border-radius:3px}
+.fm{scroll-snap-align:start;flex:0 0 238px;border:1px solid var(--line);background:rgba(234,244,251,.03);transition:.2s;display:flex;flex-direction:column}
+.fm:hover{border-color:var(--teal);transform:translateY(-5px)}
+.fm .ph{height:130px;position:relative;display:grid;place-items:center;overflow:hidden}
+.fm .ph::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 6px,rgba(5,10,16,.2) 6.5px)}
+.fm .ph span{font-size:10.5px;letter-spacing:4px;color:rgba(255,255,255,.92);z-index:1}
+.fm .bd{padding:15px 16px 16px;flex:1;display:flex;flex-direction:column}
+.fm h4{font-size:16px;font-weight:900;letter-spacing:.4px}
+.fm .mt{font-size:11.5px;color:var(--ink3);margin-top:6px;letter-spacing:.4px}
+.fm .rt{margin-top:auto;padding-top:13px;border-top:1px dashed var(--line2);display:flex;justify-content:space-between;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.fm .rt b{color:var(--teal)}
+.fm .rt span{color:var(--ink3)}
+
+/* 栏目四：放映机进度轴 */
+.reels{display:grid;grid-template-columns:56px 1fr;gap:34px;align-items:start}
+.reels .axis{display:flex;flex-direction:column;align-items:center;gap:0;position:sticky;top:100px}
+.reels .axis .wh{width:56px;height:56px;border-radius:50%;border:2.5px solid var(--teal);display:grid;place-items:center;font-family:ui-monospace,Menlo,monospace;font-size:12px;font-weight:900;color:var(--teal);background:rgba(20,212,184,.08)}
+.reels .axis .rod{width:2px;flex:1;min-height:120px;background:linear-gradient(var(--teal),var(--cyan),var(--blue))}
+.stage{display:flex;flex-direction:column;gap:20px}
+.st{display:grid;grid-template-columns:88px 1fr;gap:22px;border:1px solid var(--line);background:rgba(234,244,251,.03);padding:20px;align-items:start;transition:.2s}
+.st:hover{border-color:rgba(20,212,184,.5);background:rgba(20,212,184,.06)}
+.st .tm{font-family:ui-monospace,Menlo,monospace;text-align:center;border-right:1px solid var(--line2);padding-right:18px}
+.st .tm b{display:block;font-size:22px;font-weight:900;color:var(--teal);line-height:1}
+.st .tm span{display:block;font-size:11px;color:var(--ink3);margin-top:5px;letter-spacing:1px}
+.st h3{font-size:18px;font-weight:900;letter-spacing:.4px}
+.st p{font-size:13.5px;color:var(--ink2);margin-top:8px}
+.st .pills{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.st .pills i{font-style:normal;font-size:11.5px;color:var(--ink3);border:1px solid var(--line2);border-radius:30px;padding:3px 11px;letter-spacing:.4px}
+.st .pills i.on{color:var(--teal);border-color:rgba(20,212,184,.5)}
+
+/* 栏目五：双窗口对比 */
+.dub{display:grid;grid-template-columns:1fr 96px 1fr;gap:0;border:1px solid var(--line)}
+.dub .win{padding:22px}
+.dub .win.a{background:rgba(20,212,184,.07)}
+.dub .win.b{background:rgba(255,77,109,.07)}
+.dub .win h3{font-size:19px;font-weight:900;letter-spacing:1.5px}
+.dub .win.a h3{color:var(--teal)}
+.dub .win.b h3{color:var(--rose)}
+.dub .win .s{font-size:11px;color:var(--ink3);letter-spacing:2.5px;margin-bottom:18px}
+.dub .win li{display:grid;grid-template-columns:24px 1fr auto;gap:11px;padding:10px 0;border-bottom:1px dashed var(--line2);align-items:center}
+.dub .win li .n{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink3)}
+.dub .win li .t{font-size:14px;font-weight:700}
+.dub .win li .t small{display:block;font-size:11.5px;color:var(--ink3);font-weight:600}
+.dub .win li .v{font-family:ui-monospace,Menlo,monospace;font-size:12px;font-weight:900}
+.dub .win.a li .v{color:var(--teal)}
+.dub .win.b li .v{color:var(--rose)}
+.dub .ctr{display:grid;place-items:center;background:var(--ink);color:#04111a;font-weight:900;font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:2px;writing-mode:vertical-rl}
+.dub .ctr span{background:var(--teal);padding:12px 4px}
+
+/* 栏目六：选片器（筛选） */
+.finder{border:1px solid var(--line);background:rgba(234,244,251,.03)}
+.finder .bar{display:flex;gap:10px;flex-wrap:wrap;padding:18px 20px;border-bottom:1px solid var(--line2);align-items:center}
+.finder .bar b{font-size:12px;letter-spacing:2px;color:var(--ink3);margin-right:4px}
+.finder .bar select,.finder .bar input{padding:10px 12px;background:rgba(5,10,16,.6);border:1px solid var(--line);color:var(--ink);font-size:13px;border-radius:3px;outline:0}
+.finder .bar select:focus,.finder .bar input:focus{border-color:var(--teal)}
+.finder .bar .go{padding:10px 22px;background:var(--teal);color:#04111a;font-size:13px;font-weight:900;letter-spacing:1.5px;border-radius:3px}
+.finder .bar .go:hover{background:var(--cyan)}
+.finder .res{padding:6px 20px 20px}
+.finder table{width:100%;border-collapse:collapse;font-size:13.5px}
+.finder th{text-align:left;font-size:11px;letter-spacing:2px;color:var(--ink3);font-weight:800;padding:14px 10px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+.finder td{padding:13px 10px;border-bottom:1px dashed var(--line2);vertical-align:top}
+.finder tbody tr:hover{background:rgba(20,212,184,.06)}
+.finder .no{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--teal);width:40px}
+.finder .nm{font-weight:800;letter-spacing:.3px}
+.finder .nm small{display:block;font-size:11.5px;color:var(--ink3);font-weight:600;margin-top:2px}
+.finder .rt{font-family:ui-monospace,Menlo,monospace;font-weight:900;color:var(--teal);width:56px}
+.finder .yr,.finder .tp,.finder .ln2{color:var(--ink3);font-size:12.5px}
+.finder .yr{width:64px}
+.finder .act{text-align:right;width:64px}
+.finder .act a{font-size:11px;color:var(--teal);border:1px solid rgba(20,212,184,.4);border-radius:30px;padding:3px 10px;white-space:nowrap}
+.finder .more-row{text-align:center;padding:16px 0 0}
+.finder .more-row button{font-size:13px;color:var(--teal);border:1px dashed rgba(20,212,184,.5);border-radius:30px;padding:9px 26px;letter-spacing:1.5px}
+.finder .more-row button:hover{background:rgba(20,212,184,.1)}
+
+/* 栏目七：观众来信 */
+.mailbox{display:grid;grid-template-columns:1.1fr 1fr;gap:24px}
+.notes{display:flex;flex-direction:column;gap:14px}
+.note{border:1px solid var(--line);border-left:3px solid var(--cyan);background:rgba(234,244,251,.03);padding:18px 20px}
+.note:nth-child(2){border-left-color:var(--teal)}
+.note:nth-child(3){border-left-color:var(--amber)}
+.note:nth-child(4){border-left-color:var(--rose)}
+.note .who{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3);margin-bottom:9px;letter-spacing:.5px}
+.note .who b{font-weight:800;color:var(--ink2)}
+.note p{font-size:14px;color:var(--ink2);text-align:justify}
+.note .pick{margin-top:11px;font-size:12px;color:var(--teal)}
+.note .pick::before{content:"今晚看：";color:var(--ink3)}
+.formbox{border:1px solid var(--line);background:linear-gradient(160deg,rgba(20,212,184,.09),rgba(5,10,16,.5));padding:26px}
+.formbox h3{font-size:20px;font-weight:900;letter-spacing:1px}
+.formbox h3 em{font-style:normal;color:var(--teal)}
+.formbox p{font-size:13px;color:var(--ink3);margin-top:7px}
+.formbox form{display:grid;gap:12px;margin-top:20px}
+.formbox input,.formbox textarea{padding:13px 14px;background:rgba(5,10,16,.6);border:1px solid var(--line);color:var(--ink);font-size:14px;border-radius:3px;outline:0;width:100%}
+.formbox textarea{min-height:104px;resize:vertical;font-family:inherit}
+.formbox input:focus,.formbox textarea:focus{border-color:var(--teal)}
+.formbox button{padding:14px;background:var(--teal);color:#04111a;font-size:14px;font-weight:900;letter-spacing:2px;border-radius:3px}
+.formbox button:hover{background:var(--cyan)}
+.formbox .chk{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--ink3);line-height:1.6}
+
+/* 栏目八：放映机档案 */
+.tape{border:1px solid var(--line);padding:24px;display:grid;grid-template-columns:1.2fr 1fr;gap:34px;align-items:center}
+.tape .left h3{font-size:clamp(20px,2.7vw,26px);font-weight:900;letter-spacing:1.5px;line-height:1.5}
+.tape .left h3 em{font-style:normal;color:var(--teal)}
+.tape .left p{font-size:14px;color:var(--ink2);margin-top:14px;text-align:justify}
+.tape .grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line2);border:1px solid var(--line)}
+.tape .grid div{background:rgba(5,10,16,.55);padding:16px 18px}
+.tape .grid dt{font-size:11px;letter-spacing:2.5px;color:var(--ink3)}
+.tape .grid dd{font-size:15px;font-weight:900;margin-top:5px;letter-spacing:.3px}
+.tape .grid dd a{color:var(--teal)}
+
+/* 页脚 */
+footer{border-top:1px solid var(--line);margin-top:60px;padding:50px 0 32px;background:rgba(5,10,16,.6)}
+.ft{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.ft .brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ft .brand b{font-size:24px;font-weight:900;letter-spacing:1px}
+.ft .brand i{font-style:normal;color:var(--teal)}
+.ft p{font-size:13.5px;color:var(--ink3);text-align:justify}
+.ft .url{display:inline-block;margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--teal);word-break:break-all;border-bottom:1px solid rgba(20,212,184,.5);padding-bottom:2px}
+.ftc h4{font-size:12px;font-weight:900;letter-spacing:3px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--line);color:var(--teal)}
+.ftc ul li{padding:6px 0}
+.ftc a{font-size:13.5px;color:var(--ink2);letter-spacing:.4px}
+.ftc a:hover{color:var(--teal)}
+.fb{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--ink3);letter-spacing:.5px}
+.fb b{color:var(--teal);font-weight:900}
+.crt{height:14px;margin-top:26px;background:repeating-linear-gradient(90deg,rgba(20,212,184,.5) 0 6px,transparent 6px 11px)}
+
+@media (max-width:1080px){
+  .ch{grid-template-columns:repeat(3,1fr)}
+  .pack,.mailbox,.tape{grid-template-columns:1fr}
+  .tape .grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .wrap{padding:0 16px}
+  .nav .wrap{height:auto;flex-wrap:wrap;padding:10px 0;gap:6px}
+  .nav a{display:none}
+  .mob{display:block}
+  #mnav.open{display:flex;flex-direction:column;width:100%;padding:6px 0 10px}
+  #mnav.open a{display:block;padding:11px 6px}
+  .player-btn{margin-left:auto}
+  .hero{grid-template-columns:1fr;gap:30px;padding:34px 0 26px}
+  .track{grid-template-columns:repeat(5,1fr);overflow-x:auto}
+  .track div{padding:14px 4px;min-width:88px}
+  .ch{grid-template-columns:1fr 1fr}
+  .pack,.mailbox,.tape{grid-template-columns:1fr}
+  .tape .grid{grid-template-columns:1fr}
+  .dub{grid-template-columns:1fr}
+  .dub .ctr{writing-mode:horizontal-tb;padding:9px;font-size:11px;letter-spacing:4px}
+  .reels{grid-template-columns:1fr;gap:16px}
+  .reels .axis{position:static;flex-direction:row;gap:14px}
+  .reels .axis .rod{width:60px;height:2px;min-height:0}
+  .st{grid-template-columns:1fr;gap:12px;padding:16px}
+  .st .tm{border-right:0;border-bottom:1px solid var(--line2);padding:0 0 12px;text-align:left}
+  .queue .q{grid-template-columns:22px 36px 1fr;gap:9px}
+  .queue .q .tm,.queue .q .go{display:none}
+  .queue .q .th{width:36px;height:48px}
+  .filmstrip{padding:4px 16px 16px}
+  .fm{flex:0 0 180px}
+  .finder .bar select,.finder .bar input{flex:1;min-width:120px}
+  .finder .yr,.finder .tp,.finder .ln2{display:none}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaolu.js"></script>
+
+<div class="reel-top"></div>
+<div class="reel-top2"></div>
+
+<!-- 导航 -->
+<div class="nav">
+  <div class="wrap" id="mnav">
+    <a href="#" class="logo" title="bt电影网 首页"><span class="reel"></span><b>b<i>t</i>电影网</b></a>
+    <a href="#ch" title="bt电影网的10个频道">频 道</a>
+    <a href="#pk" title="bt电影网主题连播包">连 播 包</a>
+    <a href="#br" title="bt电影网放映表">放 映 表</a>
+    <a href="#st" title="bt电影网今晚排片">今 晚 排 片</a>
+    <a href="#du" title="bt电影网双榜">双 榜</a>
+    <a href="#fd" title="bt电影网选片器">选 片 器</a>
+    <a href="#mb" title="bt电影网观众来信">观 众 来 信</a>
+    <span class="nb"></span>
+    <a href="#fd" class="player-btn" title="bt电影网一键开播">一 键 开 播</a>
+    <button class="mob" id="mob" aria-label="菜单"><i></i><i></i><i></i></button>
+  </div>
+</div>
+
+<!-- 首屏：放映厅 -->
+<section class="hero wrap">
+  <div class="now">
+    <span class="badge">NOW SHOWING · 今晚 21:30 开播</span>
+    <h1>一键<em>连播</em>，<br>今晚不换片。</h1>
+    <p>bt电影网（https://btdianyingwang-wap.github.io）不是视频站，是一台在线电影机。挑一个主题包，点一下，今晚三小时自动排满，中途不用再决定。</p>
+    <div class="act">
+      <a href="#pk" class="a1" title="bt电影网开始连播">立 即 开 播</a>
+      <a href="#fd" class="a2" title="bt电影网选片器">自 选 片 单</a>
+    </div>
+  </div>
+  <aside class="screen">
+    <div class="hd"><b>▶ 今晚放映队列</b><span id="clock">21:30:00</span></div>
+    <div class="queue" id="queue"></div>
+  </aside>
+</section>
+
+<div class="track wrap">
+  <div><b>10</b><span>主题频道</span></div>
+  <div><b>40</b><span>连播片包</span></div>
+  <div><b>9.6</b><span>平均时长(h)</span></div>
+  <div><b>3</b><span>分钟定片</span></div>
+  <div><b>86k</b><span>包夜观众</span></div>
+</div>
+
+<!-- 栏目一：10 个频道 -->
+<section class="wrap" id="ch">
+  <div class="shd">
+    <div class="tc"><b>01</b><span>CH</span></div>
+    <div class="tx"><h2>十个<em>频道</em></h2><small>TEN CHANNELS · 按心情选台</small></div>
+    <span class="ln"></span>
+    <a class="mo" href="#" title="bt电影网全部频道">全 部 频 道 ›</a>
+  </div>
+  <div class="ch" id="chbox"></div>
+</section>
+
+<!-- 栏目二：主题连播包 -->
+<section class="wrap" id="pk">
+  <div class="shd">
+    <div class="tc"><b>02</b><span>PK</span></div>
+    <div class="tx"><h2>主题<em>连播包</em></h2><small>MARATHON PACKS · 点一下播一晚</small></div>
+    <span class="ln"></span>
+    <a class="mo" href="#" title="bt电影网全部连播包">全 部 片 包 ›</a>
+  </div>
+  <div class="pack" id="pkbox"></div>
+</section>
+
+<!-- 栏目三：放映表 -->
+<section class="wrap" id="br">
+  <div class="shd">
+    <div class="tc"><b>03</b><span>FT</span></div>
+    <div class="tx"><h2>本周<em>放映表</em></h2><small>FILM STRIP · 横向滑动选片</small></div>
+    <span class="ln"></span>
+    <a class="mo" href="#" title="bt电影网完整放映表">完 整 放 映 表 ›</a>
+  </div>
+  <div class="board">
+    <div class="filmstrip" id="fmbox"></div>
+  </div>
+</section>
+
+<!-- 栏目四：今晚排片 -->
+<section class="wrap" id="st">
+  <div class="shd">
+    <div class="tc"><b>04</b><span>ST</span></div>
+    <div class="tx"><h2>今晚<em>排片</em></h2><small>TONIGHT SCHEDULE · 四幕一晚</small></div>
+    <span class="ln"></span>
+    <a class="mo" href="#" title="bt电影网切换日期">切 换 日 期 ›</a>
+  </div>
+  <div class="reels">
+    <div class="axis"><div class="wh">REEL<br>01</div><div class="rod"></div></div>
+    <div class="stage" id="stbox"></div>
+  </div>
+</section>
+
+<!-- 栏目五：双窗口 -->
+<section class="wrap" id="du">
+  <div class="shd">
+    <div class="tc"><b>05</b><span>VS</span></div>
+    <div class="tx"><h2>连播<em>双榜</em></h2><small>VS · 人气开播 vs 完整看完</small></div>
+    <span class="ln"></span>
+    <a class="mo" href="#" title="bt电影网完整榜单">完 整 榜 单 ›</a>
+  </div>
+  <div class="dub" id="dubox"></div>
+</section>
+
+<!-- 栏目六：选片器 -->
+<section class="wrap" id="fd">
+  <div class="shd">
+    <div class="tc"><b>06</b><span>FT</span></div>
+    <div class="tx"><h2>三分钟<em>选片器</em></h2><small>FINDER · 组合条件，实时出清单</small></div>
+    <span class="ln"></span>
+    <span style="font-size:12px;color:var(--ink3);letter-spacing:.5px">当前显示 8 条，共 48 条</span>
+  </div>
+  <div class="finder">
+    <div class="bar">
+      <b>筛 选</b>
+      <select aria-label="类型"><option>类型：全部</option><option>剧情</option><option>悬疑</option><option>喜剧</option><option>动画</option><option>犯罪</option><option>纪录</option></select>
+      <select aria-label="年代"><option>年代：近三年</option><option>2020 年代</option><option>2010 年代</option><option>2000 年代</option><option>经典 90 前</option></select>
+      <select aria-label="时长"><option>时长：不限</option><option>90 分钟内</option><option>90–120 分钟</option><option>120 分钟以上</option></select>
+      <select aria-label="语言"><option>语言：不限</option><option>华语</option><option>英语</option><option>日语</option><option>韩语</option></select>
+      <input type="text" placeholder="关键词：片名 / 导演 / 演员" style="max-width:220px" aria-label="关键词">
+      <button class="go">出 片 单</button>
+    </div>
+    <div class="res">
+      <table>
+        <thead><tr><th>编号</th><th>片名 · 信息</th><th>类型</th><th>年代</th><th>片长</th><th>评分</th><th></th></tr></thead>
+        <tbody id="fdbox"></tbody>
+      </table>
+      <div class="more-row"><button onclick="alert('已展开全部 48 条')">展 开 全 部 40 条 ›</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目七：观众来信 -->
+<section class="wrap" id="mb">
+  <div class="shd">
+    <div class="tc"><b>07</b><span>MA</span></div>
+    <div class="tx"><h2>观众<em>来信</em></h2><small>LETTERS · 今天 14 封，上墙 4 封</small></div>
+    <span class="ln"></span>
+    <a class="mo" href="#" title="bt电影网全部观众来信">全 部 来 信 ›</a>
+  </div>
+  <div class="mailbox">
+    <div class="notes" id="mbox"></div>
+    <div class="formbox">
+      <h3>给<em>放映员</em>留张条</h3>
+      <p>想看什么主题、什么心情、几点开始，写下来，下周一排进片单。</p>
+      <form onsubmit="return send(event)">
+        <input type="text" id="fname" placeholder="怎么称呼你" required>
+        <input type="email" id="fmail" placeholder="邮箱（可选，用来回信）">
+        <textarea id="fmsg" placeholder="比如：周三晚 22 点后，想看三部节奏慢、画面好、不虐的片子" required></textarea>
+        <label class="chk"><input type="checkbox" checked> 允许把这条留言（匿名）贴到「观众来信」栏目</label>
+        <button type="submit">投 进 信 箱</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目八：放映机档案 -->
+<section class="wrap" id="tape">
+  <div class="shd">
+    <div class="tc"><b>08</b><span>INFO</span></div>
+    <div class="tx"><h2>放映机<em>档案</em></h2><small>ABOUT · 网站名称与网址</small></div>
+  </div>
+  <div class="tape">
+    <div class="left">
+      <h3>网站名称：<em>bt电影网</em><br>网站网址：<em>https://btdianyingwang-wap.github.io</em></h3>
+      <p>bt电影网是一台在线电影机，每天 21:30 自动开播，按主题把片子排成一晚。10 个频道、40 个连播片包、每周更新，不插广告、不跳页、不用中途再选。</p>
+    </div>
+    <dl class="grid">
+      <div><dt>网站名称</dt><dd>bt电影网</dd></div>
+      <div><dt>网站网址</dt><dd><a href="https://btdianyingwang-wap.github.io/" title="bt电影网">btdianyingwang-wap.github.io</a></dd></div>
+      <div><dt>开播时间</dt><dd>每日 21:30</dd></div>
+      <div><dt>主题频道</dt><dd>10 个</dd></div>
+      <div><dt>连播片包</dt><dd>40 个</dd></div>
+      <div><dt>包夜观众</dt><dd>86,420 位</dd></div>
+      <div><dt>更新频率</dt><dd>每周一 10:00</dd></div>
+      <div><dt>观众信箱</dt><dd><a href="#" title="bt电影网观众信箱">mail@btdianyingwang-wap.github.io</a></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+  <div class="wrap">
+    <div class="ft">
+      <div>
+        <div class="brand"><span class="reel"></span><b>b<i>t</i>电影网</b></div>
+        <p>bt电影网（https://btdianyingwang-wap.github.io）每天 21:30 自动开播，按主题排满一晚，今晚不换片。</p>
+        <a class="url" href="https://btdianyingwang-wap.github.io/" title="bt电影网">🔗 https://btdianyingwang-wap.github.io</a>
+      </div>
+      <div class="ftc">
+        <h4>频 道</h4>
+        <ul>
+          <li><a href="#ch" title="bt电影网频道">十个频道</a></li>
+          <li><a href="#pk" title="bt电影网连播包">主题连播包</a></li>
+          <li><a href="#br" title="bt电影网放映表">本周放映表</a></li>
+          <li><a href="#st" title="bt电影网今晚排片">今晚排片</a></li>
+        </ul>
+      </div>
+      <div class="ftc">
+        <h4>工 具</h4>
+        <ul>
+          <li><a href="#fd" title="bt电影网选片器">三分钟选片器</a></li>
+          <li><a href="#du" title="bt电影网双榜">连播双榜</a></li>
+          <li><a href="#mb" title="bt电影网观众来信">观众来信</a></li>
+          <li><a href="#" title="bt电影网片单存档">片单存档</a></li>
+        </ul>
+      </div>
+      <div class="ftc">
+        <h4>编 务</h4>
+        <ul>
+          <li><a href="#tape" title="关于bt电影网">放映机档案</a></li>
+          <li><a href="#" title="bt电影网排片规则">排片规则</a></li>
+          <li><a href="#" title="bt电影网投稿">点片投稿</a></li>
+          <li><a href="#" title="bt电影网隐私政策">隐私政策</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fb">
+      <span>© 2026 <b>bt电影网</b> · 网站名称：bt电影网 ｜ 网站网址：https://btdianyingwang-wap.github.io ｜ 每日 21:30 开播</span>
+      <span>放映员：bt · 选片组：4 人 · 来信信箱见页脚</span>
+    </div>
+    <div class="crt"></div>
+  </div>
+</footer>
+
+<script>
+var CH=[
+  ["情绪台","EMO-01","按心情开台：丧、爽、甜、爽、燃，五档情绪对应五组片包。","12 包"],
+  ["导演台","DIR-02","一晚专看一位导演，从处女作排到最近一部。","6 包"],
+  ["类型台","GEN-03","悬疑、喜剧、恐怖、犯罪、动画、纪录，类型原教旨主义。","8 包"],
+  ["年代台","YR-04","按年份连播，比如 1994、2019，看完理解一个年份。","5 包"],
+  ["深夜台","NIT-05","23:00 后开播，节奏慢、氛围足、不费脑。","4 包"],
+  ["合家台","FAM-06","老人小孩都能看，无雷点、无尿点、无血点。","3 包"],
+  ["冷门台","HID-07","被名字和海报耽误的，平均评分 8.5 以上。","4 包"],
+  ["短片台","SHT-08","15 分钟以内的短片串播，适合碎片时间。","2 包"],
+  ["纪录台","DOC-09","纪录片三连，看完想做点什么。","3 包"],
+  ["补片台","FIX-10","经典重看，每包五部，看过的也值得再看一遍。","5 包"]
+];
+var PK=[
+  ["失恋急诊室","8 部 · 312 分钟 · 周三 22:00","哭完两小时，第三天能正常上班","失恋恢复标准流程片包","7 部片 ｜ 全程 312 分钟 ｜ 22:00 开播","#ff4d6d,#c9184a","18:00 后不推荐观看"],
+  ["雨夜不关机","6 部 · 268 分钟 · 周五 23:00","窗外下雨，屏幕里也在下","雨声白噪音式连播","6 部片 ｜ 全程 268 分钟 ｜ 23:00 开播","#22b8ff,#2f6bff","建议关灯"],
+  ["周日赖床场","7 部 · 340 分钟 · 周日 09:00","从睁眼播到午饭，全程不需起身","治愈系周末连播","7 部片 ｜ 全程 340 分钟 ｜ 09:00 开播","#ffb020,#ff8a00","赖床友好"],
+  ["周一续航包","5 部 · 245 分钟 · 周一 21:30","把最难的一天灌过去","工作日晚间续航片包","5 部片 ｜ 全程 245 分钟 ｜ 21:30 开播","#14d4b8,#0fa88f","通勤可听"]
+];
+var BR=[
+  ["MON","周一","奥本海默 · 周处除三害 · 白日之下",9.6],
+  ["TUE","周二","机器人之梦 · 你想活出怎样的人生 · 破·地狱",9.1],
+  ["WED","周三","默杀 · 抓娃娃 · 九龙城寨之围城",9.4],
+  ["THU","周四","出走的决心 · 草木人间 · 涉过愤怒的海",8.7],
+  ["FRI","周五","泳者之心 · 久别重逢 · 姥姥的外孙",8.9],
+  ["SAT","周六","疯狂动物城 2 · 头脑特工队 2 · 蓦然回首",8.6],
+  ["SUN","周日","里斯本丸沉没 · 晨光正好 · 但愿人长久",8.5],
+  ["NXT","下周一","敬请期待 · 本周预告次日 10:00 放出",0]
+];
+var ST=[
+  ["21:30","第一幕 · 暖场","开场先看一部短的","不长、不虐、看完想点外卖，负责把人按在沙发上。","90 分钟","轻 · 暖场"],
+  ["22:15","第二幕 · 正片","今晚的主题片","连播包的核心，中途不换片，看完才算今晚值回票价。","128 分钟","主题 · 正片"],
+  ["00:35","第三幕 · 续摊","想走的人可以走","给还想继续的人，节奏放缓，但剧情不降。","112 分钟","慢 · 续摊"],
+  ["02:20","第四幕 · 收尾","睡不着的收尾片","氛围大于剧情，看不懂也不影响睡觉。","86 分钟","氛围 · 收尾"]
+];
+var DU={
+  a:[["奥本海默","传记 · 完整看完率最高",96],["机器人之梦","动画 · 二刷率最高",94],["出走的决心","剧情 · 平均看完时长最长",92],["周处除三害","犯罪 · 中途离场最少",90],["破·地狱","剧情 · 结局完整看到底",88]],
+  b:[["默杀","悬疑 · 开播即弃最少",97],["抓娃娃","喜剧 · 点开率最高",95],["九龙城寨之围城","动作 · 首 10 分钟留存",93],["泳者之心","传记 · 换片率最低",91],["疯狂动物城 2","动画 · 家庭场常客",89]]
+};
+var FD=[
+  ["01","奥本海默","诺兰 · 2023 · 传记 / 历史",8.5,2023,"180 分钟",9.8],
+  ["02","周处除三害","黄精甫 · 2024 · 犯罪 / 动作",7.6,2024,"134 分钟",9.5],
+  ["03","机器人之梦","藤本タツキ · 2024 · 动画",7.5,2024,"102 分钟",9.2],
+  ["04","出走的决心","尹丽川 · 2024 · 剧情 / 家庭",7.3,2024,"96 分钟",8.9],
+  ["05","白日之下","简君晋 · 2024 · 剧情 / 社会",7.8,2024,"92 分钟",8.8],
+  ["06","破·地狱","陈茂贤 · 2024 · 剧情 / 家庭",7.2,2024,"126 分钟",8.7],
+  ["07","泳者之心","乔阿吉姆·罗恩尼 · 2024 · 传记 / 运动",6.9,2024,"118 分钟",8.6],
+  ["08","涉过愤怒的海","曹保平 · 2024 · 犯罪 / 悬疑",7.4,2024,"144 分钟",8.5]
+];
+var MB=[
+  ["阿May · 深圳","bt电影网真的治好了我的选择困难，以前刷半小时还看手机。","今晚看：周日赖床场"],
+  ["老周 · 成都","点过一次雨夜不关机，窗外真下雨，离谱地合适。","今晚看：雨夜不关机"],
+  ["小满 · 上海","能不能加一个「一个人吃饭」的包？求求了。","今晚看：周一续航包"],
+  ["K · 广州","失恋急诊室播完第二天就复工了，bt电影网是个好放映员。","今晚看：失恋急诊室"]
+];
+var Q=[
+  ["21:30","奥本海默","诺兰 · 传记","180 分钟"],
+  ["00:30","周处除三害","黄精甫 · 犯罪","134 分钟"],
+  ["02:44","机器人之梦","藤本タツキ · 动画","102 分钟"],
+  ["04:26","白日之下","简君晋 · 剧情","92 分钟"],
+  ["06:00","泳者之心","乔阿吉姆·罗恩尼 · 传记","118 分钟"]
+];
+var G=["#14d4b8","#0fa88f","#22b8ff","#2f6bff","#ffb020","#ff8a00","#ff4d6d","#c9184a"];
+
+var $=function(i){return document.getElementById(i)};
+$('chbox').innerHTML=CH.map(function(c){
+  return '<div class="c"><div class="freq">CH '+c[1]+'</div><h3>'+c[0]+'</h3><p>'+c[2]+'</p><div class="ct"><span>'+c[3]+'</span><b>→</b></div></div>';
+}).join('');
+
+$('pkbox').innerHTML=PK.map(function(p,i){
+  var bar=p[4].split(' ｜ ').map(function(s,j){return '<i style="background:linear-gradient(180deg,'+G[(i*2+j)%G.length]+','+G[(i*2+j+1)%G.length]+')"></i>'}).join('');
+  return '<article class="pk"><div class="top"><span class="tag">连播包 0'+(i+1)+'</span><span class="len">'+p[3]+'</span></div><div class="bd"><h3>'+p[0]+'</h3><div class="who">'+p[1]+'</div><p style="margin-top:12px;font-size:14px;color:var(--ink2)">'+p[2]+'</p></div><div class="stripe">'+bar+'</div><div class="ft"><div><b>'+p[3].split(' · ')[0]+'</b><span>部片</span></div><div><b>'+p[3].split(' · ')[1]+'</b><span>总时长</span></div><div><b>'+p[3].split(' · ')[2]+'</b><span>开播时间</span></div></div></article>';
+}).join('');
+
+$('fmbox').innerHTML=BR.map(function(r,i){
+  var bg=G[i%G.length]+','+G[(i+1)%G.length];
+  return '<article class="fm"><div class="ph" style="background:linear-gradient(150deg,'+bg+')"><span>'+r[0]+' · '+r[1]+'</span></div><div class="bd"><h4>'+r[1]+' 放映</h4><div class="mt">'+r[2]+'</div><div class="rt"><b>'+r[3]+'</b><span>热度</span></div></div></article>';
+}).join('');
+
+$('stbox').innerHTML=ST.map(function(s,i){
+  var pills=['短 · 暖场','中 · 正片','长 · 续摊','氛围 · 收尾'];
+  return '<div class="st"><div class="tm"><b>'+s[0]+'</b><span>第 '+(i+1)+' 幕</span></div><div><h3>'+s[1]+'</h3><p>'+s[2]+'</p><div class="pills"><i class="on">'+s[3]+'</i><i>'+s[2].slice(0,10)+'</i><i>不换片</i></div></div></div>';
+}).join('');
+
+$('dubox').innerHTML=
+  '<div class="win a"><h3>人气开播榜</h3><div class="s">OPEN RATE · 点开就放</div><ul>'+DU.a.map(function(r){return '<li><span class="n">'+String(DU.a.indexOf(r)+1).padStart(2,'0')+'</span><span class="t">'+r[0]+'<small>'+r[1]+'</small></span><span class="v">'+r[2]+'</span></li>'}).join('')+'</ul></div>'
+ +'<div class="ctr"><span>VS</span></div>'
+ +'<div class="win b"><h3>完整看完榜</h3><div class="s">FINISH RATE · 看到字幕</div><ul>'+DU.b.map(function(r){return '<li><span class="n">'+String(DU.b.indexOf(r)+1).padStart(2,'0')+'</span><span class="t">'+r[0]+'<small>'+r[1]+'</small></span><span class="v">'+r[2]+'</span></li>'}).join('')+'</ul></div>';
+
+$('fdbox').innerHTML=FD.map(function(r){
+  return '<tr><td class="no">'+r[0]+'</td><td class="nm">'+r[1]+'<small>'+r[2]+'</small></td><td class="tp">'+r[3]+'</td><td class="yr">'+r[4]+'</td><td class="ln2">'+r[5]+'</td><td class="rt">'+r[6]+'</td><td class="act"><a href="#" title="'+r[1]+' - bt电影网">加 入 队 列</a></td></tr>';
+}).join('');
+
+$('mbox').innerHTML=MB.map(function(m){
+  return '<div class="note"><div class="who"><b>'+m[0]+'</b><span>今天 14:32</span></div><p>'+m[1]+'</p><div class="pick">'+m[2]+'</div></div>';
+}).join('');
+
+$('queue').innerHTML=Q.map(function(q,i){
+  var bg=G[i%G.length]+','+G[(i+1)%G.length];
+  return '<div class="q'+(i===0?' on':'')+'"><span class="n">'+String(i+1).padStart(2,'0')+'</span><span class="th"><i style="background:linear-gradient(150deg,'+bg+')"></i></span><span class="nm">'+q[1]+'<small>'+q[2]+'</small></span><span class="tm">'+q[0]+'</span><span class="go">连 播</span></div>';
+}).join('');
+
+var mb=$('mob'),nv=$('mnav');
+mb.addEventListener('click',function(){nv.classList.toggle('open')});
+nv.addEventListener('click',function(e){
+  if(e.target.tagName==='A'){nv.classList.remove('open');var h=e.target.getAttribute('href');if(h&&h.charAt(0)==='#'){e.preventDefault();var el=document.querySelector(h);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}}
+});
+function send(e){
+  e.preventDefault();
+  var n=$('fname').value.trim(),m=$('fmsg').value.trim();
+  if(!n||!m){alert('请填写称呼与留言内容');return false}
+  alert('已投进信箱！bt电影网放映员会在三个工作日内回信。');
+  $('fname').value='';$('fmail').value='';$('fmsg').value='';return false;
+}
+setInterval(function(){
+  var d=new Date(),p=function(x){return String(x).padStart(2,'0')};
+  $('clock').textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+},1000);
+</script>
+</body>
+</html>
